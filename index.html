@@ -1,300 +1,308 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎮 Juntos otra vez: videojuegos como puente social</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 Juntos Otra Vez: Videojuegos como puente social</title>
 
   <style>
-   
     body {
       font-family: "Poppins", sans-serif;
       margin: 0;
       background-color: #0f0f1a;
       color: #eaeaea;
       line-height: 1.7;
-      opacity: 0;
-      animation: pageFadeIn 1s ease-in forwards;
+      scroll-behavior: smooth;
     }
 
-    @keyframes pageFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Animación de entrada general */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-   
+    /* Header y navegación */
     header {
       background: linear-gradient(135deg, #6a00ff, #3d0479);
       color: #fff;
       text-align: center;
-      padding: 20px 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      padding: 60px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
     header h1 {
-      font-size: 2.4rem;
-      margin: 6px 0;
-      animation: flicker 2s infinite alternate;
+      font-size: 3em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px #b67fff;
+      animation: flicker 2.5s infinite alternate;
     }
 
     @keyframes flicker {
       0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         opacity: 1;
-        text-shadow: 0 0 10px #b67fff, 0 0 20px #9f81ff, 0 0 30px #6e0ad6;
+        text-shadow: 0 0 15px #b67fff, 0 0 25px #6e0ad6;
       }
-      20%, 24%, 55% {
-        opacity: 0.8;
-        text-shadow: none;
-      }
+      20%, 24%, 55% { opacity: 0.8; text-shadow: none; }
     }
 
-    header p { margin: 0 0 8px; font-size:1rem; }
-
     nav {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      background-color: rgba(15,15,26,0.35);
-      padding: 8px 0;
-      backdrop-filter: blur(6px);
-      position: sticky;
-      top: 72px; /* header height area */
-      z-index: 999;
+      margin-top: 15px;
     }
 
     nav a {
       color: #f0f0ff;
+      margin: 0 12px;
       text-decoration: none;
       font-weight: 600;
-      padding: 6px 8px;
-      border-radius: 6px;
-      transition: color .18s, background .18s;
+      transition: color 0.3s, text-shadow 0.3s;
     }
-    nav a:hover { color:#b67fff; background: rgba(182,127,255,0.06); }
 
-  
-    main { padding: 20px 12px 60px; }
+    nav a:hover {
+      color: #b67fff;
+      text-shadow: 0 0 10px #b67fff;
+    }
 
+    /* Secciones */
     section {
       background-color: #1a1a2e;
-      margin: 28px auto;
-      padding: 24px;
-      max-width: 920px;
+      margin: 50px auto;
+      padding: 35px;
+      max-width: 950px;
       border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.55);
-      transform: translateY(16px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       opacity: 0;
-      transition: all .6s cubic-bezier(.2,.9,.2,1);
+      transform: translateY(40px);
+      transition: all 1.2s ease;
     }
 
-   
-    .fade-in { opacity: 1; transform: translateY(0); }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     h2 {
       color: #b67fff;
       border-bottom: 3px solid #6e0ad6;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
-      text-shadow: 0 0 8px rgba(110,10,214,0.14);
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #6e0ad6;
     }
 
-    h3 { color:#9f81ff; margin-top:8px; }
-
-    p, li { font-size: 1rem; margin-bottom: 10px; color: #eaeaea; }
-
-    ul { padding-left: 18px; }
+    h3 {
+      color: #9f81ff;
+    }
 
     img {
       width: 100%;
-      display:block;
       border-radius: 10px;
-      margin: 12px 0 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
-    .fuente-imagen { font-size: .84rem; color: #9f9fbf; margin-top: -8px; }
-
-    .meta {
-      background-color: #252536;
-      padding: 14px;
-      border-left: 4px solid #9a4dff;
-      border-radius: 8px;
-      margin-top: 12px;
+    .tabla-actividades {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
     }
 
-    .colaboradores { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; }
-    .colaborador {
-      background: #23233a;
-      padding: 14px;
-      border-left:4px solid #b67fff;
-      border-radius:10px;
-      flex:1 1 45%;
-      min-width:200px;
+    .tabla-actividades th, .tabla-actividades td {
+      border: 1px solid #6e0ad6;
+      padding: 8px;
+      text-align: left;
     }
 
-    .contacto { text-align:center; margin-top:8px; }
-    a { color: #b67fff; }
-    a:hover { color: #ffd36b; }
+    .tabla-actividades th {
+      background-color: #2a2a3e;
+      color: #b67fff;
+    }
+
+    .audio {
+      text-align: center;
+      margin-top: 15px;
+    }
 
     footer {
-      text-align:center;
-      background:#3d0479;
-      color:#fff;
-      padding:16px 8px;
-      margin-top:30px;
+      text-align: center;
+      background-color: #3d0479;
+      color: #fff;
+      padding: 20px 0;
+      margin-top: 50px;
+      font-size: 0.9em;
     }
 
-    /* Responsive */
-    @media (max-width:760px){
-      header h1{ font-size:1.5rem; }
-      nav{ top:64px; flex-wrap:wrap; gap:8px; padding:6px 6px; }
-      .colaborador{ flex:1 1 100%; }
-      section{ margin:18px 12px; padding:18px; }
+    a {
+      color: #b67fff;
+    }
+
+    a:hover {
+      color: #d2b6ff;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>🎮 Juntos otra vez</h1>
+    <h1>🎮 Juntos Otra Vez</h1>
     <p>Videojuegos como puente social</p>
-
-   
     <nav>
-      <a href="#presentacion">Inicio</a>
-      <a href="#problematica">Problemática</a>
-      <a href="#objetivos">Objetivos</a>
-      <a href="#justificacion">Justificación</a>
-      <a href="#equipo">Equipo</a>
-      <a href="#gantt">Gantt</a>
-      <a href="#portafolio">Portafolio</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#fase1">Fase 1</a>
+      <a href="#objetivos">Objetivos y Metas</a>
+      <a href="#fase2">Fase 2</a>
+      <a href="#fase5">Fase 5</a>
     </nav>
   </header>
+<section id="fase1" class="fade-in">
+  <h2>🌟 Fase 1: Tema del proyecto</h2>
+  <img src="Jugadores celebrando.jpg" alt="Jugadores celebrando después de un torneo">
+  <p class="fuente-imagen">
+    Imagen: Photo by <a href="https://www.istockphoto.com/photo/team-of-professional-cybersport-gamers-celebrating-success-in-gaming-club-gm1354761874-429436896" target="_blank">Yaroslav Astakhov</a> on <a href="https://www.istockphoto.com/" target="_blank">iStock</a>
+  </p>
+  <!-- 🌟 Fase 1 -->
+  <section id="fase1">
+    <h2>📘 Fase 1: Tema del Proyecto</h2>
+    <p>
+      El proyecto <strong>“Juntos Otra Vez: Videojuegos como puente social”</strong> surge como una respuesta a las secuelas sociales que dejó la pandemia, 
+      especialmente la dificultad para convivir y la pérdida de confianza al interactuar de manera presencial. Este tema es relevante porque, 
+      en la comunidad, muchas personas (en especial jóvenes y adultos) han desarrollado ansiedad social y prefieren comunicarse solo de forma virtual.
+    </p>
+    <p>
+      El propósito principal es fortalecer la cohesión comunitaria y promover la socialización presencial post-pandemia a través de actividades híbridas que 
+      combinen videojuegos cooperativos con convivencias presenciales seguras y accesibles. Se llevará a cabo con recursos locales y apoyo voluntario de amigos, 
+      vecinos y centros culturales, utilizando espacios comunitarios y consolas prestadas.
+    </p>
+    <p>
+      Este proyecto es importante porque busca reconstruir los lazos sociales, recuperar el sentido de pertenencia y fomentar la participación ciudadana, 
+      contribuyendo al bienestar emocional y a la unión dentro de la comunidad.
+    </p>
+     Fuente: García Ramírez, Bertha. (2025,18 de octubre). Fase 1. FASE 1: Fase 1: Planificación. Objetivos-metas
+      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea-SEP.
+       Recuperado de 
+    <a href= https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link
 
-  <main>
-    <section id="presentacion" class="fade-in">
-      <h2>🌟 Presentación del proyecto</h2>
-      <img src="Jugadores celebrando.jpg" alt="Jugadores de eSports celebrando éxito en torneo">
-      <p class="fuente-imagen">
-        Imagen: Photo by <a href="https://www.istockphoto.com/photo/team-of-professional-cybersport-gamers-celebrating-success-in-gaming-club-gm1354761874-429436896" target="_blank">Yaroslav Astakhov</a> on iStock
-      </p>
-      <p>
-        <strong>“Juntos otra vez”</strong> es una iniciativa que busca reconectar a las personas a través del poder de los videojuegos cooperativos.
-        Este proyecto combina la tecnología y la convivencia presencial para fomentar la empatía, el trabajo en equipo y la recreación saludable
-        después de la pandemia. Queremos demostrar que los videojuegos pueden ser una herramienta positiva de encuentro y aprendizaje.
-      </p>
-    </section>
+    </p>
+    
+  </section>
 
-    <section id="problematica" class="fade-in">
-      <h2>⚠️ Problemática</h2>
-      <img src="Personas jugando.jpg" alt="Grupo de jóvenes jugando videojuegos en comunidad">
-      <p class="fuente-imagen">
-        Imagen: Photo by <a href="https://www.istockphoto.com/" target="_blank">iStock</a>
-      </p>
-      <p>
-        Después del confinamiento, muchas personas, especialmente jóvenes, han perdido espacios de socialización. La tecnología se usa principalmente
-        de forma individual, dejando de lado su potencial para fortalecer los lazos comunitarios. “Juntos otra vez” responde a esta situación,
-        proponiendo actividades híbridas (presenciales y digitales) que promuevan la unión y la participación colectiva.
-      </p>
-    </section>
+  <!-- 🎯 Objetivos -->
+  <section id="objetivos">
+    <h2>🎯 Objetivos y Metas</h2>
+    <p>En esta sección se muestran los objetivos generales y específicos del proyecto, junto con las metas establecidas.</p>
+    <p><em>(Aquí deberás insertar tu imagen con los objetivos y metas)</em></p>
+    <img src="Objetivos_metas.jpg.png" alt="Objetivos y metas del proyecto">
+  </section>
 
-    <section id="objetivos" class="fade-in">
-      <h2>🎯 Objetivos</h2>
-      <h3>Objetivo general</h3>
-      <p>Fortalecer la convivencia y el bienestar social mediante un evento comunitario que integre videojuegos cooperativos y convivencia presencial.</p>
-      <h3>Objetivos específicos</h3>
-      <ul>
-        <li>Fomentar la colaboración entre los participantes mediante dinámicas digitales y presenciales.</li>
-        <li>Usar tecnologías emergentes para organizar y difundir el evento.</li>
-        <li>Crear espacios recreativos sanos que impulsen la interacción y el aprendizaje compartido.</li>
-      </ul>
-    </section>
+  <!-- 🎧 Fase 2 -->
+  <section id="fase2">
+    <h2>💬 Fase 2: Justificación</h2>
+    <p>
+      La justificación explica las razones por las que se seleccionó este tema, así como la importancia social y emocional de la propuesta. 
+      En esta fase se reflexiona sobre los beneficios esperados, la viabilidad del proyecto y su impacto dentro de la comunidad.
+    </p>
+    <div class="audio">
+      <p><strong>Escucha la justificación:</strong></p>
+      <audio controls>
+        <source src="Justificación.mp3.ogg" type="audio/mpeg">
+      </audio>
+    </div>
+  </section>
+ Fuente: García Ramírez, Bertha. (2025,18 de octubre). Fase 2. Fase 2: Planificación. Justificación 
+      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea-SEP.
+      Recuperado de 
+    <a href=https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link
+  
+    </p>
+  <!-- 📅 Fase 5 -->
+  <section id="fase5">
+    <h2>📅 Fase 5: Planificación y Rutas de Acción</h2>
+    <p>
+      A continuación se presentan las actividades planificadas para el desarrollo del proyecto, distribuidas por fases, 
+      indicando su duración, recursos y responsables.
+    </p>
 
-    <section id="justificacion" class="fade-in">
-      <h2>💡 Justificación</h2>
-      <p>
-        El proyecto surge ante la necesidad de reconstruir el tejido social afectado por el aislamiento. Los videojuegos son una herramienta que
-        promueve la cooperación, la comunicación y la empatía, cualidades que ayudan a mejorar la convivencia. Además, integrar la tecnología
-        en actividades comunitarias abre la puerta a nuevas formas de inclusión, creatividad y participación.
-      </p>
-    </section>
+    <table class="tabla-actividades">
+      <tr>
+        <th>Actividad</th>
+        <th>Duración</th>
+        <th>Inicio</th>
+        <th>Conclusión</th>
+        <th>Tareas</th>
+        <th>Recursos materiales</th>
+        <th>Recursos tecnológicos</th>
+        <th>Recursos financieros</th>
+        <th>Responsables</th>
+      </tr>
+      <tr>
+        <td>Planear encuentros</td>
+        <td>2 días</td>
+        <td>10-feb-26</td>
+        <td>11-feb-26</td>
+        <td>Definir dinámicas, juegos y espacios</td>
+        <td>Hojas, marcadores, laptop</td>
+        <td>Internet</td>
+        <td>Dinero en efectivo</td>
+        <td>Líder del proyecto</td>
+      </tr>
+      <tr>
+        <td>Verificar disponibilidad</td>
+        <td>2 días</td>
+        <td>16-feb-26</td>
+        <td>17-feb-26</td>
+        <td>Confirmar renta y permisos</td>
+        <td>Formato impreso</td>
+        <td>Gmail, redes sociales</td>
+        <td>Dinero en efectivo</td>
+        <td>Apoyo logístico</td>
+      </tr>
+    </table>
 
-    <section id="equipo" class="fade-in">
-      <h2>🤝 Nuestro equipo</h2>
-      <div class="colaboradores">
-        <div class="colaborador">
-          <strong>Bertha Georgina García Ramírez</strong><br>
-          <em>Líder del proyecto</em><br>
-          Planificación, coordinación y supervisión general.
-        </div>
-        <div class="colaborador">
-          <strong>Ing. en Sistemas</strong><br>
-          <em>Soporte técnico</em><br>
-          Instalación, conexión y monitoreo de equipos.
-        </div>
-        <div class="colaborador">
-          <strong>Colaborador de Comunicación</strong><br>
-          <em>Diseño y difusión</em><br>
-          Creación de contenido gráfico y redes sociales.
-        </div>
-        <div class="colaborador">
-          <strong>Apoyo Logístico</strong><br>
-          <em>Transporte</em><br>
-          Coordinación de traslado de materiales y equipos.
-        </div>
-        <div class="colaborador">
-          <strong>Voluntarios</strong><br>
-          <em>Animación y apoyo</em><br>
-          Conducción de dinámicas y atención a asistentes.
-        </div>
-      </div>
-    </section>
+    </p>
+    <h3>📊 Diagrama de Gantt</h3>
+    <p>A continuación se presenta el diagrama de Gantt correspondiente a la planeación del proyecto.</p>
+    <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto">
+    <p style="font-size:0.9em; color:#aaa;">
+      Fuente: García Ramírez, Bertha. (s.f.). Fase 5: Control. Diagrama de Gantt Para Gestión Del Proyecto 
+      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea-SEP.
+      Recuperado de 
+  <a href="https://docs.google.com/document/d/197pATAnGUXY1kHfrCTkkAbA5bq0VQMJz/edit?usp=drive_link&ouid=110051585348554365087&rtpof=true&sd=true"
+    </p>
+  </section>
+<section id="contacto" class="fade-in">
+  <h2>📩 Contáctanos</h2>
+  <p style="text-align:center;">
+    Si deseas saber más sobre el proyecto <strong>“Juntos otra vez: videojuegos como puente social”</strong>, 
+    colaborar o proponer ideas para futuras actividades, ¡no dudes en escribirnos!
+  </p>
 
-    <section id="gantt" class="fade-in">
-      <h2>📊 Diagrama de Gantt</h2>
-      <p>
-        A continuación se presenta el <strong>diagrama de Gantt</strong> correspondiente a la planeación y control de las actividades del proyecto.
-        En este esquema se muestran las fases, tareas y duración estimada de cada actividad clave del proyecto.
-      </p>
-      <div style="text-align:center; margin-top:18px;">
-        <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto Juntos otra vez" style="width:90%; border-radius:10px; box-shadow:0 6px 20px rgba(182,127,255,0.35);">
-        <p class="fuente-imagen">Imagen: Elaboración propia (Fase 5 del proyecto).</p>
-      </div>
-    </section>
-
-    <section id="portafolio" class="fade-in">
-      <h2>📂 Portafolio de Evidencias – Módulo 23</h2>
-      <p>
-        Este portafolio recopila los productos desarrollados a lo largo del módulo 23, desde la identificación del problema hasta la planeación, dirección y control.
-        Refleja el proceso de aprendizaje, creatividad e implementación de tecnologías emergentes.
-      </p>
-      <div class="meta" style="text-align:center;">
-        <p>Accede al portafolio completo en Google Drive:</p>
-        <p style="margin-top:10px;">
-          🔗 <a href="https://drive.google.com/drive/folders/1-SC2X7RBcL4G9beYm5rEz6Zf_hZJSWc-?usp=sharing" target="_blank" rel="noopener">Ver Portafolio de Evidencias</a>
-        </p>
-      </div>
-    </section>
-
-    <section id="contacto" class="fade-in">
-      <h2>📩 Contáctanos</h2>
-      <div class="contacto">
-        <p>¿Quieres colaborar o conocer más sobre el proyecto?</p>
-        <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
-        <p>💬 <a href="https://wa.me/524521711308" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></p>
-      </div>
-    </section>
-  </main>
+  <div class="contacto" style="text-align:center; margin-top:20px;">
+    <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
+    <p>💬 <a href="https://wa.me/524521711308" target="_blank">Escríbenos por WhatsApp</a></p>
+  </div>
+  </p>
+</section>
 
   <footer>
     <p>© 2026 | Proyecto Final – Módulo 23 Prepa en Línea SEP</p>
   </footer>
+
+  <!-- Script para animar secciones al hacer scroll -->
+  <script>
+    const sections = document.querySelectorAll('section');
+    const showOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < triggerBottom) sec.classList.add('visible');
+      });
+    };
+    window.addEventListener('scroll', showOnScroll);
+    window.addEventListener('load', showOnScroll);
+  </script>
 </body>
 </html>
+
 
 
 
