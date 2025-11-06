@@ -1,333 +1,501 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎮 Juntos Otra Vez: Videojuegos como puente social</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🎮 Juntos Otra Vez: videojuegos como puente social</title>
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background-color: #0f0f1a;
-      color: #eaeaea;
-      line-height: 1.7;
-      scroll-behavior: smooth;
-      animation: fadeIn 1.5s ease-in;
+    /* --- Tipografía / base --- */
+    :root{
+      --bg:#0b0b10;
+      --card:#111123;
+      --neon1:#b67fff;
+      --neon2:#6e0ad6;
+      --accent:#6fe0ff;
+      --muted:#9f9fbf;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, "Poppins", sans-serif;background:var(--bg);color:#eaeaea;scroll-behavior:smooth}
+    a{color:var(--neon1);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* --- HERO / portada --- */
+    .hero{
+      position:relative;
+      min-height:62vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero__bg{
+      position:absolute;inset:0;
+      background-image: url("Jugadores celebrando.jpg");
+      background-size:cover;background-position:center;
+      filter: blur(6px) brightness(.35);
+      transform: scale(1.05);
+    }
+    .hero__overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(110,10,214,0.18), rgba(10,10,30,0.6));
+    }
+    .hero__content{
+      position:relative; z-index:2; padding:40px;
+      max-width:980px;
+      animation: fadeInUp .9s ease both;
+    }
+    .logo-emoji{
+      display:inline-block; font-size:28px; margin-right:10px;
+      filter: drop-shadow(0 0 12px rgba(182,127,255,.5));
+      vertical-align:middle;
+    }
+    h1{
+      font-size:48px; margin:0 0 12px;
+      letter-spacing:1px;
+      text-shadow: 0 0 10px rgba(182,127,255,.25);
+      color: white;
+    }
+    h1 span.glow{
+      color:var(--neon1);
+      text-shadow:
+        0 0 8px rgba(182,127,255,.9),
+        0 0 20px rgba(110,10,214,.8),
+        0 0 40px rgba(102,51,255,.6);
+    }
+    p.lead{margin:0 auto 18px;max-width:820px;color:#dcdaf3}
+
+    .hero__cta{
+      display:flex;gap:12px;justify-content:center;margin-top:18px;
+    }
+    .btn{
+      background: linear-gradient(90deg,var(--neon1),var(--neon2));
+      color:#08080c;padding:10px 18px;border-radius:999px;font-weight:700;border:none;
+      box-shadow:0 6px 24px rgba(110,10,214,.18);cursor:pointer;
+    }
+    .btn.ghost{
+      background:transparent;border:1.5px solid rgba(182,127,255,.15);color:#eaeaea;
+      box-shadow:none;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* --- BOTTOM MENU sticky --- */
+    .bottom-nav{
+      position:fixed;left:0;right:0;bottom:0;z-index:1200;
+      display:flex;justify-content:center;align-items:center;gap:28px;
+      padding:14px 10px;background:linear-gradient(180deg, rgba(11,11,16,.85), rgba(17,11,30,.95));
+      border-top:1px solid rgba(182,127,255,.06);backdrop-filter: blur(6px);
     }
+    .bottom-nav a{color:#ddd;padding:8px 12px;border-radius:8px;font-weight:600}
+    .bottom-nav a:hover{color:var(--neon1);text-shadow:0 0 8px rgba(182,127,255,.2)}
 
-    header {
-      background: linear-gradient(135deg, #6a00ff, #3d0479);
-      color: #fff;
-      text-align: center;
-      padding: 50px 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    /* --- Main sections --- */
+    main{padding:36px 20px 120px; max-width:1100px;margin:0 auto}
+    section.card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      margin:36px 0;padding:28px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.6);
+      border:1px solid rgba(110,10,214,.06);opacity:0;transform:translateY(24px);
     }
+    section.card.visible{opacity:1;transform:none;transition:all .7s ease}
 
-    header h1 {
-      font-size: 3em;
-      text-shadow: 0 0 15px #b67fff;
-      animation: flicker 2.5s infinite alternate;
+    h2{color:var(--neon1);margin:0 0 14px;font-size:22px;text-shadow:0 0 10px rgba(150,100,255,.08)}
+    .muted{color:var(--muted);font-size:0.95em;margin-bottom:10px}
+
+    /* --- columnas / equipo --- */
+    .cols{display:flex;gap:16px;flex-wrap:wrap}
+    .col{flex:1 1 300px;min-width:260px}
+
+    .card-img{width:100%;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);display:block}
+
+    /* --- tabla planificacion (scrollable) --- */
+    .tabla-wrap{border:2px solid rgba(110,10,214,.06);border-radius:10px;overflow:auto;max-height:420px}
+    table{width:100%;border-collapse:collapse;font-size:0.92rem}
+    thead th{position:sticky;top:0;background:linear-gradient(180deg, rgba(30,20,50,.9), rgba(20,12,40,.95));color:var(--neon1);padding:10px;border-bottom:1px solid rgba(182,127,255,.06)}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top;text-align:left}
+    tr:nth-child(even) td{background:rgba(255,255,255,.01)}
+
+    /* --- audio / portfolio --- */
+    .audio{display:flex;flex-direction:column;gap:8px;align-items:center}
+    audio{width:100%;max-width:640px;border-radius:8px}
+
+    .meta-ref{font-size:0.85em;color:#bdb9df;margin-top:12px}
+
+    /* --- footer --- */
+    footer{padding:26px 20px;text-align:center;color:#cfc9ee;margin-top:28px}
+
+    /* --- Animaciones --- */
+    @keyframes fadeInUp{from{opacity:0; transform:translateY(24px)} to{opacity:1; transform:none}}
+    .fade-in{animation:fadeInUp .8s ease both}
+    /* small screens */
+    @media (max-width:720px){
+      h1{font-size:28px}
+      .hero{min-height:54vh;padding:28px 10px}
+      .bottom-nav{gap:8px;padding:10px}
+      table{font-size:0.78rem}
     }
-
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-        text-shadow: 0 0 15px #b67fff, 0 0 25px #6e0ad6;
-      }
-      20%, 24%, 55% {
-        opacity: 0.8;
-        text-shadow: none;
-      }
-    }
-
-    nav {
-      margin-top: 15px;
-    }
-
-    nav a {
-      color: #f0f0ff;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s, text-shadow 0.3s;
-    }
-
-    nav a:hover {
-      color: #b67fff;
-      text-shadow: 0 0 8px #b67fff;
-    }
-
-    section {
-      background-color: #1a1a2e;
-      margin: 50px auto;
-      padding: 35px;
-      max-width: 950px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1.2s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    h2 {
-      color: #b67fff;
-      border-bottom: 3px solid #6e0ad6;
-      padding-bottom: 5px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 10px #6e0ad6;
-    }
-
-    h3 {
-      color: #9f81ff;
-    }
-
-    img {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-
-    .tabla-scroll {
-      max-height: 400px;
-      overflow-y: auto;
-      border: 2px solid #6e0ad6;
-      border-radius: 10px;
-      margin-top: 15px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      color: #eaeaea;
-      font-size: 0.9em;
-    }
-
-    th, td {
-      border: 1px solid #6e0ad6;
-      padding: 8px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #2a2a3e;
-      color: #b67fff;
-    }
-
-    .audio {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    footer {
-      text-align: center;
-      background-color: #3d0479;
-      color: #fff;
-      padding: 20px 0;
-      font-size: 0.9em;
-      margin-top: 50px;
-    }
-
-    a {
-      color: #b67fff;
-    }
-
-    a:hover {
-      color: #d2b6ff;
-    }
-
-    .contacto {
-      text-align: center;
-      margin-top: 20px;
-    }
-
   </style>
 </head>
-
 <body>
-  <header>
-    <h1>🎮 Juntos Otra Vez</h1>
-    <p>Videojuegos como puente social</p>
-    <nav>
-      <a href="#introduccion">Introducción</a>
-      <a href="#objetivos">Objetivos y Metas</a>
-      <a href="#justificacion">Justificación</a>
-      <a href="#planificacion">Planificación</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
+
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <div class="logo-emoji">🎮</div>
+      <h1><span class="glow">Juntos Otra Vez</span></h1>
+      <p class="lead">Videojuegos como puente social — iniciativa para reconectar a la comunidad mediante encuentros híbridos (digital + presencial) que fomenten la convivencia post-pandemia.</p>
+
+      <div class="hero__cta">
+        <a class="btn" href="#planificacion">Ver planificación</a>
+        <a class="btn ghost" href="#introduccion">Leer introducción</a>
+      </div>
+
+      <p style="margin-top:14px;color:var(--muted);font-size:0.95rem">Proyecto piloto — Febrero–Marzo 2026 • Eventos comunitarios híbridos</p>
+    </div>
   </header>
 
-  <section id="introduccion">
-    <h2>🌟 Introducción</h2>
-    <img src="Jugadores celebrando.jpg" alt="Jugadores celebrando después de un torneo">
-    <p>
-      El proyecto <strong>“Juntos Otra Vez: Videojuegos como puente social”</strong> surge como respuesta a las secuelas sociales que dejó la pandemia, 
-      especialmente la dificultad para convivir y la pérdida de confianza al interactuar de manera presencial. 
-      Este tema es relevante porque muchas personas, en especial jóvenes y adultos, han desarrollado ansiedad social y prefieren comunicarse solo de forma virtual.
-    </p>
-    <p>
-      Su propósito principal es fortalecer la cohesión comunitaria y promover la socialización presencial post-pandemia mediante actividades híbridas 
-      que combinen videojuegos cooperativos con convivencias presenciales seguras y accesibles.
-    </p>
-    <p>
-      Fuente: García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 1: Planificación. Objetivos-metas.</em> 
-      Módulo 23. Prepa en Línea SEP. Recuperado de 
-      <a href="https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link" target="_blank">Google Drive</a>.
-    </p>
-  </section>
+  <!-- BOTTOM STICKY NAV -->
+  <nav class="bottom-nav" aria-label="Navegación principal">
+    <a href="#introduccion">Inicio</a>
+    <a href="#objetivos">Objetivos</a>
+    <a href="#justificacion">Justificación (audio)</a>
+    <a href="#planificacion">Planificación</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
 
-  <section id="objetivos">
-    <h2>🎯 Objetivos y Metas</h2>
-    <p>
-      Se presentan los <strong>objetivos generales y específicos</strong> del proyecto junto con sus metas, 
-      orientadas a fortalecer la convivencia social mediante la tecnología y la colaboración.
-    </p>
-    <div style="text-align:center; margin-top:20px;">
-      <img src="Objetivos_metas.jpg.png" alt="Objetivos y metas del proyecto" style="width:90%; border-radius:10px; box-shadow:0 4px 12px rgba(182,127,255,0.4);">
-      <p style="font-size:0.9em; color:#aaa; margin-top:10px;">
-        Fuente: García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 1: Planificación. Objetivos-metas.</em><br>
-        Módulo 23. <em>Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea SEP.<br>
-        Recuperado de 
-        <a href="https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link" target="_blank">Google Drive</a>.
+  <main>
+    <!-- INTRO / Tema del proyecto -->
+    <section id="introduccion" class="card visible">
+      <h2>🌟 Introducción</h2>
+      <p class="muted">Descripción general del tema y propósito del proyecto.</p>
+      <div class="cols">
+        <div class="col">
+          <img class="card-img" src="Jugadores celebrando.jpg" alt="Jugadores celebrando después de un torneo">
+        </div>
+        <div class="col">
+          <p><strong>“Juntos Otra Vez: Videojuegos como puente social”</strong> surge como respuesta a las secuelas sociales de la pandemia: la pérdida de espacios de convivencia y el aumento de la ansiedad social. El proyecto propone organizar actividades híbridas (videojuegos cooperativos + convivencias presenciales) para reconstruir la confianza, promover la empatía y recuperar el sentido de pertenencia en la comunidad.</p>
+
+          <p>Se realizará en espacios comunitarios con apoyo voluntario y recursos locales, buscando que la tecnología acerque, no separe.</p>
+
+          <p class="meta-ref">Fuente: García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 1: Planificación. Objetivos-metas.</em> Módulo 23. Las tecnologías emergentes en la administración y gestión. Prepa en Línea-SEP.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OBJETIVOS Y METAS (imagen) -->
+    <section id="objetivos" class="card">
+      <h2>🎯 Objetivos y metas</h2>
+      <p class="muted">Objetivo general, objetivos específicos y metas (imagen con el detalle).</p>
+
+      <!-- espacio preparado para la imagen de objetivos/ metas (sube Objetivos_metas.jpg.png) -->
+      <div style="text-align:center; margin-top:12px;">
+        <img src="Objetivos_metas.jpg.png" alt="Objetivos y metas del proyecto" style="width:92%;max-width:860px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.6)">
+        <p class="meta-ref">Imagen: objetivos y metas del proyecto (inserta la imagen generada con los objetivos específicos y metas).</p>
+      </div>
+
+      <div style="margin-top:14px;">
+        <strong>Objetivo general (ejemplo para la presentación):</strong>
+        <p>Fortalecer, durante febrero de 2026, la cohesión comunitaria y la socialización presencial post-pandemia mediante actividades híbridas que combinen videojuegos cooperativos y convivencias presenciales seguras, usando recursos locales y voluntariado para reconstruir la confianza y el sentido de pertenencia entre jóvenes y adultos.</p>
+        <ul>
+          <li><strong>Objetivo específico 1:</strong> Diseñar en la primera semana de febrero las actividades híbridas comunitarias.</li>
+          <li><strong>Objetivo específico 2:</strong> Implementar dos eventos piloto en la segunda y tercera semana de febrero (espacios comunitarios).</li>
+          <li><strong>Objetivo específico 3:</strong> Evaluar al finalizar febrero el impacto mediante encuestas y observación directa.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- JUSTIFICACIÓN (audio) -->
+    <section id="justificacion" class="card">
+      <h2>💬 Justificación</h2>
+      <p class="muted">Razones por las que el proyecto es necesario y su impacto social y emocional.</p>
+
+      <p>El aislamiento dejó secuelas en la salud emocional y la convivencia comunitaria. “Juntos Otra Vez” busca reconstruir el tejido social mediante actividades inclusivas que integren tecnología y recreación, promoviendo colaboración y bienestar.</p>
+
+      <div class="audio" style="margin-top:12px;">
+        <strong>Escucha la justificación (audio):</strong>
+        <!-- Asegúrate de subir el archivo Justificación.ogg al mismo sitio que este HTML -->
+        <audio controls>
+          <source src="Justificación.ogg" type="audio/ogg">
+          Tu navegador no soporta la reproducción de audio. (Sube el archivo Justificación.ogg al mismo directorio.)
+        </audio>
+        <p class="meta-ref">Fuente: García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 2: Planificación. Justificación.</em> Módulo 23. Prepa en Línea-SEP.</p>
+      </div>
+    </section>
+
+    <!-- PLANIFICACIÓN / TABLA -->
+    <section id="planificacion" class="card">
+      <h2>📅 Planificación y rutas de acción</h2>
+      <p class="muted">Tabla con actividades, duración, recursos y responsables (vista desplazable).</p>
+
+      <div class="tabla-wrap" style="margin-top:14px;">
+        <table aria-label="Tabla de actividades">
+          <thead>
+            <tr>
+              <th>Actividad</th>
+              <th>Duración</th>
+              <th>Inicio</th>
+              <th>Conclusión</th>
+              <th>Tareas</th>
+              <th>Recursos materiales</th>
+              <th>Recursos tecnológicos</th>
+              <th>Recursos financieros</th>
+              <th>Responsables</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Primera fase -->
+            <tr>
+              <td>Planear los encuentros (temas, dinámicas, lugar)</td>
+              <td>2 días</td>
+              <td>10-feb-26</td>
+              <td>11-feb-26</td>
+              <td>Tarea 1.1: Definir dinámicas, juegos y espacios</td>
+              <td>Hojas, marcadores, silla, mesa, laptop</td>
+              <td>Internet</td>
+              <td>Dinero en efectivo</td>
+              <td>Líder del proyecto, 1 colaborador</td>
+            </tr>
+            <tr>
+              <td>(continuación) Establecer fecha y hora</td>
+              <td>2 días</td>
+              <td>12-feb-26</td>
+              <td>13-feb-26</td>
+              <td>Tarea 1.2: Establecer fecha y hora</td>
+              <td>Agenda impresa, celular</td>
+              <td>Internet</td>
+              <td>Dinero en efectivo</td>
+              <td>Líder del proyecto</td>
+            </tr>
+
+            <tr>
+              <td>Verificar disponibilidad de lugar y equipos</td>
+              <td>2 días</td>
+              <td>16-feb-26</td>
+              <td>17-feb-26</td>
+              <td>Tarea 2.1: Confirmar renta de consolas, pantallas y controles</td>
+              <td>Listado impreso, laptop</td>
+              <td>Internet, Facebook, Instagram</td>
+              <td>Dinero en efectivo</td>
+              <td>Ingeniero en sistemas</td>
+            </tr>
+            <tr>
+              <td>Solicitar permiso de uso de sala</td>
+              <td>1 día</td>
+              <td>18-feb-26</td>
+              <td>18-feb-26</td>
+              <td>Tarea 2.2: Solicitar permiso</td>
+              <td>Formato de solicitud impresa</td>
+              <td>Gmail</td>
+              <td>Dinero en efectivo</td>
+              <td>Apoyo logístico</td>
+            </tr>
+
+            <tr>
+              <td>Difundir evento / convocatoria</td>
+              <td>3 días</td>
+              <td>19-feb-26</td>
+              <td>23-feb-26</td>
+              <td>Tarea 3.1: Diseñar carteles y difundir en redes</td>
+              <td>Hojas, marcadores, laptop</td>
+              <td>Canva</td>
+              <td>Dinero en efectivo</td>
+              <td>Colaborador</td>
+            </tr>
+            <tr>
+              <td>Promover en grupos locales</td>
+              <td>4 días</td>
+              <td>21-feb-26</td>
+              <td>23-feb-26</td>
+              <td>Tarea 3.2: Mensajes en grupos</td>
+              <td>Cintas, hojas, celular, carteles impresos</td>
+              <td>WhatsApp, redes sociales</td>
+              <td>Dinero en efectivo</td>
+              <td>Colaborador</td>
+            </tr>
+
+            <!-- Segunda fase -->
+            <tr>
+              <td>Preparar espacio físico / montaje</td>
+              <td>1 día</td>
+              <td>08-mar-26</td>
+              <td>08-mar-26</td>
+              <td>Tarea 4.1: Colocar mesas, sillas y decoración</td>
+              <td>Renta de mesas, sillas y decoración, laptop</td>
+              <td>Internet de apoyo técnico</td>
+              <td>Dinero en efectivo</td>
+              <td>Líder del proyecto, 1 apoyo logístico, 1 colaborador</td>
+            </tr>
+            <tr>
+              <td>Instalar equipos / conexión eléctrica</td>
+              <td>1 día</td>
+              <td>08-mar-26</td>
+              <td>08-mar-26</td>
+              <td>Tarea 4.2: Instalar equipos y verificar</td>
+              <td>Extensiones eléctricas, consolas, pantallas, proyector</td>
+              <td>Software de audio</td>
+              <td>Dinero en efectivo</td>
+              <td>Ingeniero en sistemas + apoyo</td>
+            </tr>
+            <tr>
+              <td>Instalar bocinas y pantallas</td>
+              <td>1 día</td>
+              <td>08-mar-26</td>
+              <td>08-mar-26</td>
+              <td>Tarea 4.3: Instalar bocinas y pantallas</td>
+              <td>Renta de audio (bocinas, micrófono)</td>
+              <td>Internet</td>
+              <td>Dinero en efectivo</td>
+              <td>1 colaborador</td>
+            </tr>
+
+            <tr>
+              <td>Realizar evento híbrido (torneo + convivencia)</td>
+              <td>1 día</td>
+              <td>08-mar-26</td>
+              <td>08-mar-26</td>
+              <td>Tarea 5.1: Supervisar torneo</td>
+              <td>Sillas, mesas, premios, consolas, controles, bocinas</td>
+              <td>Juegos en red, internet</td>
+              <td>Dinero en efectivo</td>
+              <td>Líder, Ing. en sistemas, apoyo logístico, voluntarios</td>
+            </tr>
+            <tr>
+              <td>Convivencia presencial / merienda</td>
+              <td>1 día</td>
+              <td>08-mar-26</td>
+              <td>08-mar-26</td>
+              <td>Tarea 5.2: Convivencia y cierre</td>
+              <td>Agua, snacks</td>
+              <td>Discord (plática)</td>
+              <td>Dinero en efectivo</td>
+              <td>3 voluntarios, líder del proyecto</td>
+            </tr>
+
+            <!-- Tercera fase -->
+            <tr>
+              <td>Recoger retroalimentación (encuesta y comentarios)</td>
+              <td>2 días</td>
+              <td>10-mar-26</td>
+              <td>11-mar-26</td>
+              <td>Tarea 6.1: Aplicar encuesta en papel y digital</td>
+              <td>Hojas, lapiceros, caja de sugerencias</td>
+              <td>Formularios de Google Forms, internet</td>
+              <td>Dinero en efectivo</td>
+              <td>2 colaboradores</td>
+            </tr>
+            <tr>
+              <td>Registrar comentarios y sugerencias</td>
+              <td>2 días</td>
+              <td>12-mar-26</td>
+              <td>13-mar-26</td>
+              <td>Tarea 6.2: Registrar comentarios</td>
+              <td>Laptop, carpeta de archivo</td>
+              <td>Google Drive</td>
+              <td>Dinero en efectivo</td>
+              <td>1 colaborador</td>
+            </tr>
+
+            <tr>
+              <td>Evaluar resultados y decidir continuidad</td>
+              <td>2 días</td>
+              <td>25-mar-26</td>
+              <td>26-mar-26</td>
+              <td>Tarea 7.1: Analizar resultados y participación</td>
+              <td>Laptop, hojas de reporte</td>
+              <td>Hojas de cálculo en línea</td>
+              <td>Dinero en efectivo</td>
+              <td>Líder, colaborador</td>
+            </tr>
+            <tr>
+              <td>Definir continuidad</td>
+              <td>1 día</td>
+              <td>27-mar-26</td>
+              <td>27-mar-26</td>
+              <td>Tarea 7.2: Definir si continúa</td>
+              <td>Hojas de planificación, celular</td>
+              <td>Internet y Gmail</td>
+              <td>Dinero en efectivo</td>
+              <td>Líder del proyecto</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p class="meta-ref" style="margin-top:12px">
+        Fuente: García Ramírez, Bertha. (2025, 01 de noviembre). <em>Fase 5: Control. Diagrama de Gantt para gestión del proyecto.</em> Módulo 23. Prepa en Línea-SEP.
       </p>
-    </div>
-  </section>
 
-  <section id="justificacion">
-    <h2>💬 Justificación</h2>
-    <p>
-      La justificación explica las razones por las que se seleccionó este tema, así como su importancia social y emocional. 
-      Se analizan los beneficios esperados, la viabilidad del proyecto y el impacto en la comunidad.
-    </p>
-    <div class="audio">
-      <p><strong>Escucha la justificación:</strong></p>
-      <audio controls>
-        <source src="Justificación.ogg" type="audio/ogg">
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
-    </div>
-    <p style="font-size:0.9em; color:#aaa;">
-      Fuente: García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 2: Planificación. Justificación.</em><br>
-      Módulo 23. Prepa en Línea SEP. Recuperado de 
-      <a href="https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link" target="_blank">Google Drive</a>.
-    </p>
-  </section>
+      <h3 style="margin-top:18px">📊 Diagrama de Gantt (pantallazo)</h3>
+      <div style="text-align:center;margin-top:8px;">
+        <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt (captura)" style="width:92%; max-width:960px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,.6)">
+        <p class="meta-ref">(Sube aquí la captura de pantalla de tu Gantt)</p>
+      </div>
+    </section>
 
-  <section id="planificacion">
-    <h2>📅 Planificación de Actividades</h2>
-    <p>Las actividades del proyecto se organizan en tres etapas: preparación, desarrollo y evaluación.</p>
-    <div class="tabla-scroll">
-      <table>
-        <tr>
-          <th>Actividad</th>
-          <th>Duración</th>
-          <th>Inicio</th>
-          <th>Conclusión</th>
-          <th>Tareas</th>
-          <th>Recursos materiales</th>
-          <th>Recursos tecnológicos</th>
-          <th>Recursos financieros</th>
-          <th>Responsables</th>
-        </tr>
-        <tr>
-          <td>Planear encuentros</td>
-          <td>2 días</td>
-          <td>10-feb-26</td>
-          <td>11-feb-26</td>
-          <td>Definir dinámicas, juegos y espacios</td>
-          <td>Hojas, marcadores, silla, mesa, laptop</td>
-          <td>Internet</td>
-          <td>Dinero en efectivo</td>
-          <td>Líder del proyecto, colaborador</td>
-        </tr>
-        <tr>
-          <td>Verificar disponibilidad</td>
-          <td>2 días</td>
-          <td>16-feb-26</td>
-          <td>17-feb-26</td>
-          <td>Confirmar renta de consolas y permisos</td>
-          <td>Formato impreso</td>
-          <td>Gmail, redes sociales</td>
-          <td>Dinero en efectivo</td>
-          <td>Apoyo logístico</td>
-        </tr>
-        <tr>
-          <td>Preparar espacio físico</td>
-          <td>1 día</td>
-          <td>08-mar-26</td>
-          <td>08-mar-26</td>
-          <td>Montar, instalar y probar equipos</td>
-          <td>Mesas, sillas, consolas, proyector</td>
-          <td>Internet y software de audio</td>
-          <td>Dinero en efectivo</td>
-          <td>Líder del proyecto, ingeniero en sistemas</td>
-        </tr>
-        <tr>
-          <td>Evento híbrido</td>
-          <td>1 día</td>
-          <td>08-mar-26</td>
-          <td>08-mar-26</td>
-          <td>Supervisar torneo y convivencia</td>
-          <td>Consolas, bocinas, premios</td>
-          <td>Internet, Discord</td>
-          <td>Dinero en efectivo</td>
-          <td>Equipo completo</td>
-        </tr>
-      </table>
-    </div>
+    <!-- PORTAFOLIO -->
+    <section id="portafolio" class="card">
+      <h2>📂 Portafolio de evidencias (Módulo 23)</h2>
+      <p class="muted">Accede a los archivos y productos que respaldan el proyecto.</p>
+      <div style="text-align:center">
+        <a class="btn" href="https://drive.google.com/drive/folders/1-SC2X7RBcL4G9beYm5rEz6Zf_hZJSWc-?usp=sharing" target="_blank">Ver portafolio en Google Drive</a>
+        <p class="meta-ref" style="margin-top:10px">Enlace al portafolio de evidencias — módulo 23.</p>
+      </div>
+    </section>
 
-    <h3>📊 Diagrama de Gantt</h3>
-    <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto">
-    <p style="font-size:0.9em; color:#aaa;">
-      Fuente: García Ramírez, Bertha. (2025, 01 de noviembre). <em>Fase 5: Control. Diagrama de Gantt para Gestión del Proyecto.</em><br>
-      Módulo 23. Prepa en Línea SEP. Recuperado de 
-      <a href="https://docs.google.com/document/d/197pATAnGUXY1kHfrCTkkAbA5bq0VQMJz/edit?usp=drive_link" target="_blank">Google Drive</a>.
-    </p>
-  </section>
+    <!-- CONTACTO -->
+    <section id="contacto" class="card">
+      <h2>📩 Contacto</h2>
+      <p class="muted">Si quieres colaborar, sugerir o preguntar algo.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <div style="min-width:220px">
+          <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
+          <p>💬 <a href="https://wa.me/524521711308" target="_blank">Enviar mensaje por WhatsApp</a></p>
+        </div>
+        <div style="flex:1">
+          <p class="muted">Citas y referencias principales:</p>
+          <ul style="margin:6px 0 0 18px">
+            <li>García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 1: Planificación. Objetivos-metas.</em></li>
+            <li>García Ramírez, Bertha. (2025, 18 de octubre). <em>Fase 2: Planificación. Justificación.</em></li>
+            <li>García Ramírez, Bertha. (2025, 01 de noviembre). <em>Fase 5: Control. Diagrama de Gantt Para Gestión Del Proyecto.</em></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <section id="contacto">
-    <h2>📩 Contáctanos</h2>
-    <p style="text-align:center;">
-      Si deseas conocer más sobre <strong>“Juntos otra vez: videojuegos como puente social”</strong>, colaborar o proponer ideas, ¡escríbenos!
-    </p>
-    <div class="contacto">
-      <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
-      <p>💬 <a href="https://wa.me/524521711308" target="_blank">Escríbenos por WhatsApp</a></p>
-    </div>
-  </section>
+  </main>
 
   <footer>
-    <p>© 2026 | Proyecto Final – Módulo 23 Prepa en Línea SEP</p>
+    © 2026 | Proyecto Final – Módulo 23 • Prepa en Línea-SEP
   </footer>
 
   <script>
-    const sections = document.querySelectorAll('section');
-    const showOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.85;
-      sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if (top < triggerBottom) sec.classList.add('visible');
+    /* Mostrar secciones con animación al hacer scroll */
+    const sections = document.querySelectorAll('section.card');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('visible'); }
       });
-    };
-    window.addEventListener('scroll', showOnScroll);
-    window.addEventListener('load', showOnScroll);
+    }, {threshold:0.18});
+    sections.forEach(s=>io.observe(s));
+
+    /* smooth behaviour for anchor clicks (extra) */
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(id.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(id);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
   </script>
 </body>
 </html>
+
 
 
 
