@@ -168,14 +168,24 @@
       color: #d2b6ff;
     }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+ /* Animación suave al aparecer */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .fade-in {
-    animation: fadeIn 1.2s ease-in-out;
-  }
+.fade-in {
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Efecto de brillo neón en los títulos */
+h2 {
+  color: #b67fff;
+  border-bottom: 3px solid #6e0ad6;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 12px #9f81ff, 0 0 24px #6e0ad6;
+}
 
     .contacto {
       text-align: center;
@@ -275,38 +285,41 @@
         <em>Animación y apoyo</em><br>
         Conducción de dinámicas y atención a asistentes.
       </div>
-    </div>
   </section>
-  <section id="gantt" class="fade-in">
+  
+    <section id="gantt" class="fade-in">
     <h2>📊 Diagrama de Gantt</h2>
     <p>
-      A continuación se presenta el diagrama de Gantt correspondiente a la planeación y control de las actividades del proyecto 
-      <strong>“Juntos otra vez”</strong>.  
-      En él se observan las fases, tareas y tiempos estimados para cada actividad.
+      A continuación se presenta el <strong>diagrama de Gantt</strong> correspondiente a la planeación y control de las actividades del proyecto 
+      <em>“Juntos otra vez: videojuegos como puente social”</em>.  
+      En este esquema se muestran las fases, tareas y duración estimada de cada actividad clave del proyecto.
     </p>
-    <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto Juntos otra vez">
-    <p class="fuente-imagen">
-      Imagen: Elaboración propia, fase de planificación del proyecto (Módulo 23).
-    </p>
+    <div style="text-align:center; margin-top:20px;">
+      <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto Juntos otra vez" style="width:90%; border-radius:10px; box-shadow:0 4px 12px rgba(182,127,255,0.4);">
+      <p class="fuente-imagen">
+        Imagen: Elaboración propia (Fase 5 del proyecto).
+      </p>
+    </div>
   </section>
 
   <section id="portafolio" class="fade-in">
-    <h2>📂 Portafolio de evidencias – Módulo 23</h2>
+    <h2>📂 Portafolio de Evidencias – Módulo 23</h2>
     <p>
-      Este portafolio reúne las actividades realizadas a lo largo del módulo, desde la definición del problema 
-      hasta la fase de control y presentación final del proyecto.  
-      Representa el proceso de aprendizaje, aplicación de tecnologías emergentes y desarrollo de competencias.
+      Este portafolio recopila los productos desarrollados a lo largo del módulo 23, 
+      desde la identificación del problema hasta la planeación, dirección y control del proyecto.
+      Refleja el proceso de aprendizaje, creatividad e implementación de tecnologías emergentes.
     </p>
 
-    <div class="meta">
+    <div class="meta" style="text-align:center; margin-top:20px;">
       <p>
-        Puedes acceder a mi portafolio completo en Google Drive en el siguiente enlace:
+        Puedes acceder a mi portafolio completo en Google Drive a través del siguiente enlace:
       </p>
-      <p style="text-align:center; margin-top:15px;">
+      <p>
         🔗 <a href="https://drive.google.com/drive/folders/1-SC2X7RBcL4G9beYm5rEz6Zf_hZJSWc-?usp=sharing" target="_blank">
         Ver Portafolio de Evidencias</a>
       </p>
     </div>
+  </section>
   </section>
 
   <section id="contacto">
