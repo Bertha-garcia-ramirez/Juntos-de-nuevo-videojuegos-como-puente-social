@@ -167,6 +167,15 @@
     a:hover {
       color: #d2b6ff;
     }
+  /* Animación de aparición */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    animation: fadeIn 1.2s ease-in-out;
+  }
 
     .contacto {
       text-align: center;
@@ -268,6 +277,37 @@
       </div>
     </div>
   </section>
+  <section id="gantt" class="fade-in">
+    <h2>📊 Diagrama de Gantt</h2>
+    <p>
+      A continuación se presenta el diagrama de Gantt correspondiente a la planeación y control de las actividades del proyecto 
+      <strong>“Juntos otra vez”</strong>.  
+      En él se observan las fases, tareas y tiempos estimados para cada actividad.
+    </p>
+    <img src="diagrama_gantt.jpg" alt="Diagrama de Gantt del proyecto Juntos otra vez">
+    <p class="fuente-imagen">
+      Imagen: Elaboración propia, fase de planificación del proyecto (Módulo 23).
+    </p>
+  </section>
+
+  <section id="portafolio" class="fade-in">
+    <h2>📂 Portafolio de evidencias – Módulo 23</h2>
+    <p>
+      Este portafolio reúne las actividades realizadas a lo largo del módulo, desde la definición del problema 
+      hasta la fase de control y presentación final del proyecto.  
+      Representa el proceso de aprendizaje, aplicación de tecnologías emergentes y desarrollo de competencias.
+    </p>
+
+    <div class="meta">
+      <p>
+        Puedes acceder a mi portafolio completo en Google Drive en el siguiente enlace:
+      </p>
+      <p style="text-align:center; margin-top:15px;">
+        🔗 <a href="https://drive.google.com/drive/folders/1-SC2X7RBcL4G9beYm5rEz6Zf_hZJSWc-?usp=sharing" target="_blank">
+        Ver Portafolio de Evidencias</a>
+      </p>
+    </div>
+  </section>
 
   <section id="contacto">
     <h2>📩 Contáctanos</h2>
@@ -283,5 +323,6 @@
   </footer>
 </body>
 </html>
+
 
 
