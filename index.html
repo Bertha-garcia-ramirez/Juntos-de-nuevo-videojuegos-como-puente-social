@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🎮 Juntos otra vez: videojuegos como puente social</title>
 
   <style>
+   
     body {
       font-family: "Poppins", sans-serif;
       margin: 0;
@@ -13,20 +14,20 @@
       color: #eaeaea;
       line-height: 1.7;
       opacity: 0;
-      animation: fadeIn 1.8s ease-in forwards;
+      animation: pageFadeIn 1s ease-in forwards;
     }
 
-    @keyframes fadeIn {
+    @keyframes pageFadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
 
-    /* --- Header y nav combinados en un bloque sticky --- */
+   
     header {
       background: linear-gradient(135deg, #6a00ff, #3d0479);
       color: #fff;
       text-align: center;
-      padding: 30px 20px;
+      padding: 20px 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       position: sticky;
       top: 0;
@@ -34,8 +35,8 @@
     }
 
     header h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
+      font-size: 2.4rem;
+      margin: 6px 0;
       animation: flicker 2s infinite alternate;
     }
 
@@ -45,155 +46,113 @@
         text-shadow: 0 0 10px #b67fff, 0 0 20px #9f81ff, 0 0 30px #6e0ad6;
       }
       20%, 24%, 55% {
-        opacity: 0.7;
+        opacity: 0.8;
         text-shadow: none;
       }
     }
 
-    header p {
-      font-size: 1.3em;
-      margin-bottom: 15px;
-    }
+    header p { margin: 0 0 8px; font-size:1rem; }
 
     nav {
-      background-color: rgba(15, 15, 26, 0.4);
-      padding: 12px 0;
-      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      background-color: rgba(15,15,26,0.35);
+      padding: 8px 0;
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 72px; /* header height area */
+      z-index: 999;
     }
 
     nav a {
       color: #f0f0ff;
-      margin: 0 15px;
       text-decoration: none;
       font-weight: 600;
-      transition: color 0.3s, text-shadow 0.3s;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: color .18s, background .18s;
     }
+    nav a:hover { color:#b67fff; background: rgba(182,127,255,0.06); }
 
-    nav a:hover {
-      color: #b67fff;
-      text-shadow: 0 0 8px #b67fff;
-    }
+  
+    main { padding: 20px 12px 60px; }
 
     section {
       background-color: #1a1a2e;
-      margin: 40px auto;
-      padding: 30px;
-      max-width: 900px;
+      margin: 28px auto;
+      padding: 24px;
+      max-width: 920px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      transform: translateY(30px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+      transform: translateY(16px);
       opacity: 0;
-      animation: fadeInUp 1s ease forwards;
+      transition: all .6s cubic-bezier(.2,.9,.2,1);
     }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+   
+    .fade-in { opacity: 1; transform: translateY(0); }
 
     h2 {
       color: #b67fff;
       border-bottom: 3px solid #6e0ad6;
-      padding-bottom: 5px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 8px #6e0ad6;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      text-shadow: 0 0 8px rgba(110,10,214,0.14);
     }
 
-    h3 {
-      color: #9f81ff;
-    }
+    h3 { color:#9f81ff; margin-top:8px; }
 
-    ul li {
-      margin-bottom: 10px;
-    }
+    p, li { font-size: 1rem; margin-bottom: 10px; color: #eaeaea; }
+
+    ul { padding-left: 18px; }
 
     img {
       width: 100%;
+      display:block;
       border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      margin: 12px 0 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
     }
 
-    .fuente-imagen {
-      font-size: 0.8em;
-      color: #9f9fbf;
-      margin-top: -12px;
-      margin-bottom: 20px;
-    }
+    .fuente-imagen { font-size: .84rem; color: #9f9fbf; margin-top: -8px; }
 
     .meta {
-      background-color: #2a2a3e;
-      padding: 20px;
-      border-left: 5px solid #9a4dff;
+      background-color: #252536;
+      padding: 14px;
+      border-left: 4px solid #9a4dff;
       border-radius: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
-    .colaboradores {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
+    .colaboradores { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; }
     .colaborador {
-      background-color: #252545;
-      padding: 20px;
-      border-left: 5px solid #b67fff;
-      border-radius: 10px;
-      flex: 1 1 45%;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #23233a;
+      padding: 14px;
+      border-left:4px solid #b67fff;
+      border-radius:10px;
+      flex:1 1 45%;
+      min-width:200px;
     }
 
-    .colaborador:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(182,127,255,0.3);
-    }
+    .contacto { text-align:center; margin-top:8px; }
+    a { color: #b67fff; }
+    a:hover { color: #ffd36b; }
 
     footer {
-      text-align: center;
-      background-color: #3d0479;
-      color: #fff;
-      padding: 20px 0;
-      font-size: 0.9em;
-      margin-top: 40px;
+      text-align:center;
+      background:#3d0479;
+      color:#fff;
+      padding:16px 8px;
+      margin-top:30px;
     }
 
-    a {
-      color: #b67fff;
-    }
-
-    a:hover {
-      color: #d2b6ff;
-    }
-
- /* Animación suave al aparecer */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-  animation: fadeIn 1.2s ease-in-out;
-}
-
-/* Efecto de brillo neón en los títulos */
-h2 {
-  color: #b67fff;
-  border-bottom: 3px solid #6e0ad6;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 12px #9f81ff, 0 0 24px #6e0ad6;
-}
-
-    .contacto {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    html {
-      scroll-behavior: smooth;
+    /* Responsive */
+    @media (max-width:760px){
+      header h1{ font-size:1.5rem; }
+      nav{ top:64px; flex-wrap:wrap; gap:8px; padding:6px 6px; }
+      .colaborador{ flex:1 1 100%; }
+      section{ margin:18px 12px; padding:18px; }
     }
   </style>
 </head>
@@ -202,140 +161,141 @@ h2 {
   <header>
     <h1>🎮 Juntos otra vez</h1>
     <p>Videojuegos como puente social</p>
+
+   
     <nav>
       <a href="#presentacion">Inicio</a>
       <a href="#problematica">Problemática</a>
       <a href="#objetivos">Objetivos</a>
       <a href="#justificacion">Justificación</a>
       <a href="#equipo">Equipo</a>
+      <a href="#gantt">Gantt</a>
+      <a href="#portafolio">Portafolio</a>
       <a href="#contacto">Contacto</a>
     </nav>
   </header>
 
-  <section id="presentacion">
-    <h2>🌟 Presentación del proyecto</h2>
-    <img src="Jugadores celebrando.jpg" alt="Jugadores de eSports celebrando éxito en torneo">
-    <p class="fuente-imagen">
-      Imagen: Photo by <a href="https://www.istockphoto.com/photo/team-of-professional-cybersport-gamers-celebrating-success-in-gaming-club-gm1354761874-429436896" target="_blank">Yaroslav Astakhov</a> on <a href="https://www.istockphoto.com/" target="_blank">iStock</a>
-    </p>
-      <strong>“Juntos otra vez”</strong> es una iniciativa que busca reconectar a las personas a través del poder de los videojuegos cooperativos.
-      Este proyecto combina la tecnología y la convivencia presencial para fomentar la empatía, el trabajo en equipo y la recreación saludable
-      después de la pandemia. Queremos demostrar que los videojuegos pueden ser una herramienta positiva de encuentro y aprendizaje.
-    </p>
-  </section>
-
-  <section id="problematica">
-    <h2>⚠️ Problemática</h2>
-    <img src="Personas jugando.jpg" alt="Multiracial young friends having fun playing video games at home - Focus on center girl face">
-    <p class="fuente-imagen">
-      Imagen: Photo by <a href="https://www.istockphoto.com/photo/multiracial-young-friends-having-fun-playing-video-games-at-home-focus-on-center-gm1356168963-430410078?searchscope=image%2Cfilm" target="_blank">DisobeyArt</a> on<a href="hhttps://www.istockphoto.com/" target="_blank">iStock</a>
-    <p>
-      Después del confinamiento, muchas personas, especialmente jóvenes, han perdido espacios de socialización. La tecnología se usa principalmente
-      de forma individual, dejando de lado su potencial para fortalecer los lazos comunitarios. “Juntos otra vez” responde a esta situación,
-      proponiendo actividades híbridas (presenciales y digitales) que promuevan la unión y la participación colectiva.
-    </p>
-  </section>
-
-  <section id="objetivos">
-    <h2>🎯 Objetivos</h2>
-    <h3>Objetivo general</h3>
-    <p>Fortalecer la convivencia y el bienestar social mediante un evento comunitario que integre videojuegos cooperativos y convivencia presencial.</p>
-    <h3>Objetivos específicos</h3>
-    <ul>
-      <li>Fomentar la colaboración entre los participantes mediante dinámicas digitales y presenciales.</li>
-      <li>Usar tecnologías emergentes para organizar y difundir el evento.</li>
-      <li>Crear espacios recreativos sanos que impulsen la interacción y el aprendizaje compartido.</li>
-    </ul>
-  </section>
-
-  <section id="justificacion">
-    <h2>💡 Justificación</h2>
-    <p>
-      El proyecto surge ante la necesidad de reconstruir el tejido social afectado por el aislamiento. Los videojuegos son una herramienta que
-      promueve la cooperación, la comunicación y la empatía, cualidades que ayudan a mejorar la convivencia. Además, integrar la tecnología
-      en actividades comunitarias abre la puerta a nuevas formas de inclusión, creatividad y participación.
-    </p>
-  </section>
-
-  <section id="equipo">
-    <h2>🤝 Nuestro equipo</h2>
-    <div class="colaboradores">
-      <div class="colaborador">
-        <strong>Bertha Georgina García Ramírez</strong><br>
-        <em>Líder del proyecto</em><br>
-        Planificación, coordinación y supervisión general.
-      </div>
-      <div class="colaborador">
-        <strong>Ing. en Sistemas</strong><br>
-        <em>Soporte técnico</em><br>
-        Instalación, conexión y monitoreo de equipos.
-      </div>
-      <div class="colaborador">
-        <strong>Colaborador de Comunicación</strong><br>
-        <em>Diseño y difusión</em><br>
-        Creación de contenido gráfico y redes sociales.
-      </div>
-      <div class="colaborador">
-        <strong>Apoyo Logístico</strong><br>
-        <em>Transporte</em><br>
-        Coordinación de traslado de materiales y equipos.
-      </div>
-      <div class="colaborador">
-        <strong>Voluntarios</strong><br>
-        <em>Animación y apoyo</em><br>
-        Conducción de dinámicas y atención a asistentes.
-      </div>
-  </section>
-  
-    <section id="gantt" class="fade-in">
-    <h2>📊 Diagrama de Gantt</h2>
-    <p>
-      A continuación se presenta el <strong>diagrama de Gantt</strong> correspondiente a la planeación y control de las actividades del proyecto 
-      <em>“Juntos otra vez: videojuegos como puente social”</em>.  
-      En este esquema se muestran las fases, tareas y duración estimada de cada actividad clave del proyecto.
-    </p>
-    <div style="text-align:center; margin-top:20px;">
-      <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto Juntos otra vez" style="width:90%; border-radius:10px; box-shadow:0 4px 12px rgba(182,127,255,0.4);">
+  <main>
+    <section id="presentacion" class="fade-in">
+      <h2>🌟 Presentación del proyecto</h2>
+      <img src="Jugadores celebrando.jpg" alt="Jugadores de eSports celebrando éxito en torneo">
       <p class="fuente-imagen">
-        Imagen: Elaboración propia (Fase 5 del proyecto).
-      </p>
-    </div>
-  </section>
-
-  <section id="portafolio" class="fade-in">
-    <h2>📂 Portafolio de Evidencias – Módulo 23</h2>
-    <p>
-      Este portafolio recopila los productos desarrollados a lo largo del módulo 23, 
-      desde la identificación del problema hasta la planeación, dirección y control del proyecto.
-      Refleja el proceso de aprendizaje, creatividad e implementación de tecnologías emergentes.
-    </p>
-
-    <div class="meta" style="text-align:center; margin-top:20px;">
-      <p>
-        Puedes acceder a mi portafolio completo en Google Drive a través del siguiente enlace:
+        Imagen: Photo by <a href="https://www.istockphoto.com/photo/team-of-professional-cybersport-gamers-celebrating-success-in-gaming-club-gm1354761874-429436896" target="_blank">Yaroslav Astakhov</a> on iStock
       </p>
       <p>
-        🔗 <a href="https://drive.google.com/drive/folders/1-SC2X7RBcL4G9beYm5rEz6Zf_hZJSWc-?usp=sharing" target="_blank">
-        Ver Portafolio de Evidencias</a>
+        <strong>“Juntos otra vez”</strong> es una iniciativa que busca reconectar a las personas a través del poder de los videojuegos cooperativos.
+        Este proyecto combina la tecnología y la convivencia presencial para fomentar la empatía, el trabajo en equipo y la recreación saludable
+        después de la pandemia. Queremos demostrar que los videojuegos pueden ser una herramienta positiva de encuentro y aprendizaje.
       </p>
-    </div>
-  </section>
-  </section>
+    </section>
 
-  <section id="contacto">
-    <h2>📩 Contáctanos</h2>
-    <div class="contacto">
-      <p>¿Quieres colaborar o conocer más sobre el proyecto?</p>
-      <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
-      <p>💬 <a href="https://wa.me/524521711308" target="_blank">Escríbenos por WhatsApp</a></p>
-    </div>
-  </section>
+    <section id="problematica" class="fade-in">
+      <h2>⚠️ Problemática</h2>
+      <img src="Personas jugando.jpg" alt="Grupo de jóvenes jugando videojuegos en comunidad">
+      <p class="fuente-imagen">
+        Imagen: Photo by <a href="https://www.istockphoto.com/" target="_blank">iStock</a>
+      </p>
+      <p>
+        Después del confinamiento, muchas personas, especialmente jóvenes, han perdido espacios de socialización. La tecnología se usa principalmente
+        de forma individual, dejando de lado su potencial para fortalecer los lazos comunitarios. “Juntos otra vez” responde a esta situación,
+        proponiendo actividades híbridas (presenciales y digitales) que promuevan la unión y la participación colectiva.
+      </p>
+    </section>
+
+    <section id="objetivos" class="fade-in">
+      <h2>🎯 Objetivos</h2>
+      <h3>Objetivo general</h3>
+      <p>Fortalecer la convivencia y el bienestar social mediante un evento comunitario que integre videojuegos cooperativos y convivencia presencial.</p>
+      <h3>Objetivos específicos</h3>
+      <ul>
+        <li>Fomentar la colaboración entre los participantes mediante dinámicas digitales y presenciales.</li>
+        <li>Usar tecnologías emergentes para organizar y difundir el evento.</li>
+        <li>Crear espacios recreativos sanos que impulsen la interacción y el aprendizaje compartido.</li>
+      </ul>
+    </section>
+
+    <section id="justificacion" class="fade-in">
+      <h2>💡 Justificación</h2>
+      <p>
+        El proyecto surge ante la necesidad de reconstruir el tejido social afectado por el aislamiento. Los videojuegos son una herramienta que
+        promueve la cooperación, la comunicación y la empatía, cualidades que ayudan a mejorar la convivencia. Además, integrar la tecnología
+        en actividades comunitarias abre la puerta a nuevas formas de inclusión, creatividad y participación.
+      </p>
+    </section>
+
+    <section id="equipo" class="fade-in">
+      <h2>🤝 Nuestro equipo</h2>
+      <div class="colaboradores">
+        <div class="colaborador">
+          <strong>Bertha Georgina García Ramírez</strong><br>
+          <em>Líder del proyecto</em><br>
+          Planificación, coordinación y supervisión general.
+        </div>
+        <div class="colaborador">
+          <strong>Ing. en Sistemas</strong><br>
+          <em>Soporte técnico</em><br>
+          Instalación, conexión y monitoreo de equipos.
+        </div>
+        <div class="colaborador">
+          <strong>Colaborador de Comunicación</strong><br>
+          <em>Diseño y difusión</em><br>
+          Creación de contenido gráfico y redes sociales.
+        </div>
+        <div class="colaborador">
+          <strong>Apoyo Logístico</strong><br>
+          <em>Transporte</em><br>
+          Coordinación de traslado de materiales y equipos.
+        </div>
+        <div class="colaborador">
+          <strong>Voluntarios</strong><br>
+          <em>Animación y apoyo</em><br>
+          Conducción de dinámicas y atención a asistentes.
+        </div>
+      </div>
+    </section>
+
+    <section id="gantt" class="fade-in">
+      <h2>📊 Diagrama de Gantt</h2>
+      <p>
+        A continuación se presenta el <strong>diagrama de Gantt</strong> correspondiente a la planeación y control de las actividades del proyecto.
+        En este esquema se muestran las fases, tareas y duración estimada de cada actividad clave del proyecto.
+      </p>
+      <div style="text-align:center; margin-top:18px;">
+        <img src="diagrama_gantt.jpg" alt="Diagrama de Gantt del proyecto Juntos otra vez" style="width:90%; border-radius:10px; box-shadow:0 6px 20px rgba(182,127,255,0.35);">
+        <p class="fuente-imagen">Imagen: Elaboración propia (Fase 5 del proyecto).</p>
+      </div>
+    </section>
+
+    <section id="portafolio" class="fade-in">
+      <h2>📂 Portafolio de Evidencias – Módulo 23</h2>
+      <p>
+        Este portafolio recopila los productos desarrollados a lo largo del módulo 23, desde la identificación del problema hasta la planeación, dirección y control.
+        Refleja el proceso de aprendizaje, creatividad e implementación de tecnologías emergentes.
+      </p>
+      <div class="meta" style="text-align:center;">
+        <p>Accede al portafolio completo en Google Drive:</p>
+        <p style="margin-top:10px;">
+          🔗 <a href="https://drive.google.com/drive/folders/1-SC2X7RBcL4G9beYm5rEz6Zf_hZJSWc-?usp=sharing" target="_blank" rel="noopener">Ver Portafolio de Evidencias</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="contacto" class="fade-in">
+      <h2>📩 Contáctanos</h2>
+      <div class="contacto">
+        <p>¿Quieres colaborar o conocer más sobre el proyecto?</p>
+        <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
+        <p>💬 <a href="https://wa.me/524521711308" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>© 2026 | Proyecto Final – Módulo 23 Prepa en Línea SEP</p>
   </footer>
 </body>
 </html>
+
 
 
 
