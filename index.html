@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -15,46 +15,71 @@
       scroll-behavior: smooth;
     }
 
-    /* Animación de entrada general */
+    /* --- Animaciones globales --- */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(25px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Header y navegación */
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #b67fff, 0 0 15px #6e0ad6; }
+      50% { text-shadow: 0 0 15px #b67fff, 0 0 25px #6e0ad6; }
+      100% { text-shadow: 0 0 5px #b67fff, 0 0 15px #6e0ad6; }
+    }
+
+    /* --- Header / Portada --- */
     header {
-      background: linear-gradient(135deg, #6a00ff, #3d0479);
+      position: relative;
+      height: 90vh;
       color: #fff;
       text-align: center;
-      padding: 60px 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      background: url('Jugadores celebrando.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 15, 26, 0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    header h1, header p, nav {
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 1.5s ease-out forwards;
     }
 
     header h1 {
       font-size: 3em;
-      margin-bottom: 10px;
-      text-shadow: 0 0 15px #b67fff;
-      animation: flicker 2.5s infinite alternate;
+      animation: glow 2s infinite alternate;
     }
 
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-        text-shadow: 0 0 15px #b67fff, 0 0 25px #6e0ad6;
-      }
-      20%, 24%, 55% { opacity: 0.8; text-shadow: none; }
+    header p {
+      font-size: 1.3em;
+      max-width: 700px;
+      margin: 10px auto 30px auto;
     }
 
     nav {
-      margin-top: 15px;
+      position: sticky;
+      top: 0;
+      background: rgba(15,15,26,0.9);
+      padding: 12px 0;
+      width: 100%;
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      text-align: center;
     }
 
     nav a {
       color: #f0f0ff;
-      margin: 0 12px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: 600;
       transition: color 0.3s, text-shadow 0.3s;
@@ -62,14 +87,14 @@
 
     nav a:hover {
       color: #b67fff;
-      text-shadow: 0 0 10px #b67fff;
+      text-shadow: 0 0 8px #b67fff;
     }
 
-    /* Secciones */
+    /* --- Secciones --- */
     section {
       background-color: #1a1a2e;
-      margin: 50px auto;
-      padding: 35px;
+      margin: 60px auto;
+      padding: 40px;
       max-width: 950px;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
@@ -88,24 +113,22 @@
       border-bottom: 3px solid #6e0ad6;
       padding-bottom: 5px;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #6e0ad6;
-    }
-
-    h3 {
-      color: #9f81ff;
+      text-shadow: 0 0 12px #9f81ff, 0 0 24px #6e0ad6;
+      animation: glow 3s infinite alternate;
     }
 
     img {
       width: 100%;
       border-radius: 10px;
-      margin-top: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      margin: 15px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
     .tabla-actividades {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      font-size: 0.9em;
     }
 
     .tabla-actividades th, .tabla-actividades td {
@@ -140,87 +163,90 @@
     a:hover {
       color: #d2b6ff;
     }
+
+    .contacto {
+      text-align: center;
+      margin-top: 20px;
+    }
+
   </style>
 </head>
 
 <body>
+
   <header>
     <h1>🎮 Juntos Otra Vez</h1>
-    <p>Videojuegos como puente social</p>
-    <nav>
-      <a href="#fase1">Fase 1</a>
-      <a href="#objetivos">Objetivos y Metas</a>
-      <a href="#fase2">Fase 2</a>
-      <a href="#fase5">Fase 5</a>
-    </nav>
+    <p>Videojuegos como puente social — un proyecto para reconectar a la comunidad mediante la convivencia híbrida.</p>
   </header>
-<section id="fase1" class="fade-in">
-  <h2>🌟 Fase 1: Tema del proyecto</h2>
-  <img src="Jugadores celebrando.jpg" alt="Jugadores celebrando después de un torneo">
-  <p class="fuente-imagen">
-    Imagen: Photo by <a href="https://www.istockphoto.com/photo/team-of-professional-cybersport-gamers-celebrating-success-in-gaming-club-gm1354761874-429436896" target="_blank">Yaroslav Astakhov</a> on <a href="https://www.istockphoto.com/" target="_blank">iStock</a>
-  </p>
-  <!-- 🌟 Fase 1 -->
-  <section id="fase1">
-    <h2>📘 Fase 1: Tema del Proyecto</h2>
+
+  <nav>
+    <a href="#introduccion">Inicio</a>
+    <a href="#descripcion">Descripción</a>
+    <a href="#objetivos">Objetivos</a>
+    <a href="#justificacion">Justificación</a>
+    <a href="#planificacion">Planificación</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <!-- Introducción -->
+  <section id="introduccion">
+    <h2>🌟 Introducción</h2>
     <p>
       El proyecto <strong>“Juntos Otra Vez: Videojuegos como puente social”</strong> surge como una respuesta a las secuelas sociales que dejó la pandemia, 
-      especialmente la dificultad para convivir y la pérdida de confianza al interactuar de manera presencial. Este tema es relevante porque, 
-      en la comunidad, muchas personas (en especial jóvenes y adultos) han desarrollado ansiedad social y prefieren comunicarse solo de forma virtual.
+      especialmente la dificultad para convivir y la pérdida de confianza al interactuar de manera presencial.  
+      Su propósito es <strong>reconstruir los lazos sociales</strong> y fomentar la convivencia entre jóvenes y adultos a través de videojuegos cooperativos 
+      y actividades presenciales.
     </p>
-    <p>
-      El propósito principal es fortalecer la cohesión comunitaria y promover la socialización presencial post-pandemia a través de actividades híbridas que 
-      combinen videojuegos cooperativos con convivencias presenciales seguras y accesibles. Se llevará a cabo con recursos locales y apoyo voluntario de amigos, 
-      vecinos y centros culturales, utilizando espacios comunitarios y consolas prestadas.
-    </p>
-    <p>
-      Este proyecto es importante porque busca reconstruir los lazos sociales, recuperar el sentido de pertenencia y fomentar la participación ciudadana, 
-      contribuyendo al bienestar emocional y a la unión dentro de la comunidad.
-    </p>
-     Fuente: García Ramírez, Bertha. (2025,18 de octubre). Fase 1. FASE 1: Fase 1: Planificación. Objetivos-metas
-      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea-SEP.
-       Recuperado de 
-    <a href= https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link target="_blank">Google Drive</a>
-
-    </p>
-    
   </section>
 
-  <!-- 🎯 Objetivos -->
+  <!-- Descripción del Proyecto -->
+  <section id="descripcion">
+    <h2>📘 Descripción del Proyecto</h2>
+    <img src="Jugadores celebrando.jpg" alt="Jugadores celebrando un torneo">
+    <p>
+      Este proyecto busca promover la <strong>cohesión comunitaria</strong> y el sentido de pertenencia por medio de eventos híbridos.  
+      Se desarrollará con recursos locales, voluntariado y espacios comunitarios.  
+      La meta principal es crear entornos donde la tecnología y la convivencia humana se complementen positivamente.  
+    </p>
+    <p style="font-size:0.9em; color:#aaa;">
+      Fuente: García Ramírez, Bertha. (s.f.). Planificación.  
+      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em>  
+      Recuperado de <a href="https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link" target="_blank">Google Drive</a>
+    </p>
+  </section>
+
+  <!-- Objetivos -->
   <section id="objetivos">
     <h2>🎯 Objetivos y Metas</h2>
-    <p>En esta sección se muestran los objetivos generales y específicos del proyecto, junto con las metas establecidas.</p>
-    <p><em>(Objetivos-metas)</em></p>
+    <p>A continuación se muestran los objetivos generales, específicos y las metas del proyecto.</p>
     <img src="Objetivos_metas.jpg.png" alt="Objetivos y metas del proyecto">
   </section>
 
-  <!-- 🎧 Fase 2 -->
-  <section id="fase2">
-    <h2>💬 Fase 2: Justificación</h2>
+  <!-- Justificación -->
+  <section id="justificacion">
+    <h2>💬 Justificación</h2>
     <p>
-      La justificación explica las razones por las que se seleccionó este tema, así como la importancia social y emocional de la propuesta. 
-      En esta fase se reflexiona sobre los beneficios esperados, la viabilidad del proyecto y su impacto dentro de la comunidad.
+      La justificación aborda las razones que respaldan la creación del proyecto. Se busca brindar alternativas que promuevan la convivencia sana y 
+      el uso positivo de la tecnología para recuperar la confianza y las relaciones interpersonales.
     </p>
     <div class="audio">
-      <p><strong>Escucha la justificación:</strong></p>
+      <p><strong>🎧 Escucha la justificación:</strong></p>
       <audio controls>
-        <source src="Justificación.mp3.ogg" type="audio/mpeg">
+        <source src="Justificación.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
       </audio>
     </div>
+    <p style="font-size:0.9em; color:#aaa;">
+      Fuente: García Ramírez, Bertha. (s.f.). Justificación.  
+      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em>  
+      Recuperado de <a href="https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link" target="_blank">Google Drive</a>
+    </p>
   </section>
- Fuente: García Ramírez, Bertha. (2025,18 de octubre). Fase 2. Fase 2: Planificación. Justificación 
-      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea-SEP.
-      Recuperado de 
-    <a href=https://drive.google.com/drive/folders/1fLgM1Lg_m1y9Cj_rIMBC4dn1QgHgbjAo?usp=drive_link target="_blank">Google Drive</a>
-  
-    </p>
-  <!-- 📅 Fase 5 -->
-  <section id="fase5">
-    <h2>📅 Fase 5: Planificación y Rutas de Acción</h2>
-    <p>
-      A continuación se presentan las actividades planificadas para el desarrollo del proyecto, distribuidas por fases, 
-      indicando su duración, recursos y responsables.
-    </p>
+
+  <!-- Planificación -->
+  <section id="planificacion">
+    <h2>📅 Planificación y Rutas de Acción</h2>
+    <p>Estas son las actividades programadas para la ejecución del proyecto, incluyendo tiempos, recursos y responsables.</p>
 
     <table class="tabla-actividades">
       <tr>
@@ -243,7 +269,7 @@
         <td>Hojas, marcadores, laptop</td>
         <td>Internet</td>
         <td>Dinero en efectivo</td>
-        <td>Líder del proyecto</td>
+        <td>Líder del proyecto, colaborador</td>
       </tr>
       <tr>
         <td>Verificar disponibilidad</td>
@@ -258,36 +284,35 @@
       </tr>
     </table>
 
-    </p>
     <h3>📊 Diagrama de Gantt</h3>
-    <p>A continuación se presenta el diagrama de Gantt correspondiente a la planeación del proyecto.</p>
+    <p>A continuación se muestra el diagrama de Gantt que representa la planificación del proyecto:</p>
     <img src="diagrama_gantt.jpg.png" alt="Diagrama de Gantt del proyecto">
     <p style="font-size:0.9em; color:#aaa;">
-      Fuente: García Ramírez, Bertha. (s.f.). Fase 5: Control. Diagrama de Gantt Para Gestión Del Proyecto 
-      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em> Prepa en Línea-SEP.
+      Fuente: García Ramírez, Bertha. (s.f.). Planificación y Control.  
+      <em>Módulo 23. Las tecnologías emergentes en la administración y gestión.</em>  
       Recuperado de 
-  <a href="https://docs.google.com/document/d/197pATAnGUXY1kHfrCTkkAbA5bq0VQMJz/edit?usp=drive_link&ouid=110051585348554365087&rtpof=true&sd=true" target="_blank">Google Drive</a>
+      <a href="https://docs.google.com/document/d/197pATAnGUXY1kHfrCTkkAbA5bq0VQMJz/edit?usp=drive_link&ouid=110051585348554365087&rtpof=true&sd=true" target="_blank">
+        Google Drive
+      </a>
     </p>
   </section>
-<section id="contacto" class="fade-in">
-  <h2>📩 Contáctanos</h2>
-  <p style="text-align:center;">
-    Si deseas saber más sobre el proyecto <strong>“Juntos otra vez: videojuegos como puente social”</strong>, 
-    colaborar o proponer ideas para futuras actividades, ¡no dudes en escribirnos!
-  </p>
 
-  <div class="contacto" style="text-align:center; margin-top:20px;">
-    <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
-    <p>💬 <a href="https://wa.me/524521711308" target="_blank">Escríbenos por WhatsApp</a></p>
-  </div>
-  </p>
-</section>
+  <!-- Contacto -->
+  <section id="contacto">
+    <h2>📩 Contáctanos</h2>
+    <p style="text-align:center;">
+      Si deseas conocer más sobre el proyecto o colaborar, puedes escribirnos:
+    </p>
+    <div class="contacto">
+      <p>📧 <a href="mailto:juntosotravezevento088@gmail.com">juntosotravezevento088@gmail.com</a></p>
+      <p>💬 <a href="https://wa.me/524521711308" target="_blank">Escríbenos por WhatsApp</a></p>
+    </div>
+  </section>
 
   <footer>
     <p>© 2026 | Proyecto Final – Módulo 23 Prepa en Línea SEP</p>
   </footer>
 
-  <!-- Script para animar secciones al hacer scroll -->
   <script>
     const sections = document.querySelectorAll('section');
     const showOnScroll = () => {
@@ -302,8 +327,6 @@
   </script>
 </body>
 </html>
-
-
 
 
 
